@@ -21,8 +21,8 @@ function theme_setup(): void {
 
 add_action( 'after_setup_theme', 'theme_setup' );
 
-function style_setup() {
-	wp_enqueue_style('main-style', get_stylesheet_uri());
+function style_setup(): void {
+	wp_enqueue_style( 'main-style', get_stylesheet_uri() );
 }
 
-add_action('wp_enqueue_scripts', 'style_setup');
+add_action( 'wp_enqueue_scripts', 'style_setup' );
