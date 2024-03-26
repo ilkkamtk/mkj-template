@@ -1,12 +1,12 @@
 <?php
 function generate_article( $products ): void {
-	if ( $products->have_posts() ) :
+    if ( $products->have_posts() ) :
 		while ( $products->have_posts() ) :
 			$products->the_post();
 			?>
             <article class="product">
 				<?php
-				the_post_thumbnail('thumbnail');
+				the_post_thumbnail( 'thumbnail' );
 				the_title( '<h3>', '</h3>' );
 				$excerpt = get_the_excerpt();
 				?>
