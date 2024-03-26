@@ -29,3 +29,4 @@ add_action( 'wp_enqueue_scripts', 'style_setup' );
 
 // custom functions
 require_once( __DIR__ . '/inc/article-function.php' );
+require_once( __DIR__ . '/inc/random-image.php' );
