@@ -41,6 +41,7 @@ get_header();
                     <a href="<?php echo get_category_link($subcategory->term_id); ?>">View all</a>
                 </article>
 			<?php
+				wp_reset_postdata();
 			endforeach;
 			?>
         </section>
