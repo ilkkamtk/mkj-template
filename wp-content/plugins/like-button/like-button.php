@@ -57,7 +57,6 @@ function like_button() {
 	$output .= '<input type="hidden" name="post_id" value="' . $post_id . '">';
 	$output .= '<button id="like-button" style="
 										    border: 0;
-										    backface-visibility: hidden;
 										    background-color: rgba(0,0,0,0);
 											">';
 	$output .= '<ion-icon name="' . $icon . '" style="color: #e21212;"></ion-icon>';
@@ -85,13 +84,14 @@ function add_like() {
 		'user_id' => $user_id
 	];
 
-	// check if user has already liked
-	$like = $wpdb->get_results( "SELECT * FROM $table_name WHERE post_id = $post_id AND user_id = $user_id" );
-
 	$format = [
 		'%d',
 		'%d'
 	];
+
+	// check if user has already liked
+	$like = $wpdb->get_results( "SELECT * FROM $table_name WHERE post_id = $post_id AND user_id = $user_id" );
+
 
 	if ( $like ) {
 		$wpdb->delete( $table_name, $data, $format );
