@@ -3,6 +3,7 @@
 const modalButtons = document.querySelectorAll('.open-modal');
 const modal = document.querySelector('#single-post');
 const closeButton = document.querySelector('#close');
+const modalContent = document.querySelector('#modal-content');
 
 modalButtons.forEach(button => {
     button.addEventListener('click', async (evt)  => {
@@ -24,6 +25,9 @@ modalButtons.forEach(button => {
         const response = await fetch(url, options);
         const post = await response.json();
         console.log(post);
+        modalContent.innerHTML = '';
+        modalContent.insertAdjacentHTML('afterbegin', `<h2>${post.post_title}</h2>`);
+        modalContent.insertAdjacentHTML('beforeend', post.post_content);
         modal.showModal();
     });
 });
