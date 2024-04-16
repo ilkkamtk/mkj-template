@@ -43,11 +43,26 @@ function theme_setup(): void {
 
 add_action( 'after_setup_theme', 'theme_setup' );
 
+// load styles
+
 function style_setup(): void {
 	wp_enqueue_style( 'main-style', get_stylesheet_uri() );
 }
 
 add_action( 'wp_enqueue_scripts', 'style_setup' );
+
+// load javascript
+
+function script_setup(): void {
+	wp_enqueue_script('single-post', get_template_directory_uri() . '/js/singlePost.js', [], '1.0', true);
+	$script_data = [
+		'ajax_url' => admin_url( 'admin-ajax.php' ),
+	];
+	wp_localize_script( 'single-post', 'singlePost', $script_data );
+}
+
+add_action('wp_enqueue_scripts', 'script_setup');
+
 
 // custom functions
 require_once( __DIR__ . '/inc/article-function.php' );
