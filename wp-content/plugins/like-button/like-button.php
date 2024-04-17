@@ -96,7 +96,7 @@ function add_like() {
 	if ( $like ) {
 		$wpdb->delete( $table_name, $data, $format );
 		echo 'Like removed';
-		wp_redirect( $_SERVER['HTTP_REFERER'] );
+		// wp_redirect( $_SERVER['HTTP_REFERER'] );
 		exit;
 	}
 
@@ -110,18 +110,22 @@ function add_like() {
 	}
 
 
-	wp_redirect( $_SERVER['HTTP_REFERER'] );
+	// wp_redirect( $_SERVER['HTTP_REFERER'] );
 	exit;
 }
 
-// add_action( 'wp_ajax_add_like', 'add_like' );
+add_action( 'wp_ajax_add_like', 'add_like' );
 
-add_action( 'admin_post_add_like', 'add_like' );
+// add_action( 'admin_post_add_like', 'add_like' );
 
 // enqueue icons
-function my_theme_load_ionicons_font() {
+function setup_scripts(): void {
 	// Load Ionicons font from CDN
 	wp_enqueue_script( 'my-theme-ionicons', 'https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js', [], '7.1.0', true );
+	wp_enqueue_script( 'like-button-script', plugin_dir_url( __FILE__ ) . 'like-button.js', [ 'jquery' ], '1.0', true );
+	wp_localize_script( 'like-button-script', 'like_button', [
+		'ajax_url' => admin_url( 'admin-ajax.php' )
+	] );
 }
 
-add_action( 'wp_enqueue_scripts', 'my_theme_load_ionicons_font' );
+add_action( 'wp_enqueue_scripts', 'setup_scripts' );
