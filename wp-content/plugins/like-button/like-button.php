@@ -95,7 +95,17 @@ function add_like() {
 
 	if ( $like ) {
 		$wpdb->delete( $table_name, $data, $format );
-		echo 'Like removed';
+
+		// get all likes for count
+		$results = $wpdb->get_results( "SELECT * FROM $table_name WHERE post_id = $post_id" );
+
+		$likes = count( $results );
+		header( 'Content-Type: application/json' );
+		echo '{
+			"likes": ' . $likes . ',
+			"liked": false,
+			"message": "Like removed"		
+		}';
 		// wp_redirect( $_SERVER['HTTP_REFERER'] );
 		exit;
 	}
@@ -103,10 +113,20 @@ function add_like() {
 
 	$success = $wpdb->insert( $table_name, $data, $format );
 
+	// get all likes for count
+	$results = $wpdb->get_results( "SELECT * FROM $table_name WHERE post_id = $post_id" );
+
+	$likes = count( $results );
+
 	if ( $success ) {
-		echo 'Like added';
+		header( 'Content-Type: application/json' );
+		echo '{
+			"likes": ' . $likes . ',
+			"liked": true,
+			"message": "Like added"		
+		}';
 	} else {
-		echo 'Error adding like';
+		header( 'HTTP/1.1 500 Internal Server Error');
 	}
 
 
